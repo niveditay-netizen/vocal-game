@@ -29,9 +29,15 @@ function setStartIcon(Icon = Mic) {
 
 function layoutCalibration() {
   const { W, H } = layout;
-  calibGroup.position.set(W / 2, H / 2);
+  calibGroup.position.set(W / 2, H * 0.56);
   calibNote.position.set(0, 0);
   calibPrompt.position.set(0, CALIB_R + 36);
+}
+
+function setFrontScreen(phase) {
+  // phase: 'idle' | 'calibrating' | 'playing'
+  titleStage.classList.toggle('hidden', phase === 'playing');
+  startWrap.classList.toggle('hidden', phase !== 'idle');
 }
 const CALIBRATION_HOLD_MS = 5_000;
 
@@ -79,6 +85,8 @@ let songEventIdx = 0;
 
 // --- DOM overlay (just the start button + status) ---
 const startBtn = document.getElementById('start');
+const startWrap = document.getElementById('start-wrap');
+const titleStage = document.getElementById('title-stage');
 const pauseBtn = document.getElementById('pause');
 const skipCalibBtn = document.getElementById('skip-calib');
 const hudCard = document.getElementById('hud-card');
@@ -189,6 +197,7 @@ function buildScene() {
 
   setStartIcon();
   startBtn.setAttribute('aria-label', 'Start microphone');
+  setFrontScreen('idle');
 
   drawStatic();
   window.addEventListener('resize', () => {
@@ -548,9 +557,9 @@ function updateCalibration(s, dt) {
   const secsLeft = Math.ceil((CALIBRATION_HOLD_MS - calibrationHeld) / 1000);
 
   calibCircle.clear();
-  calibCircle.circle(0, 0, R + 6).fill({ color: GLASS, alpha: 0.08 });
-  calibCircle.circle(0, 0, R).fill({ color: GLASS, alpha: sustaining ? 0.22 : 0.16 });
-  calibCircle.circle(0, 0, R).stroke({ color: GLASS, width: 1.5, alpha: 0.38 });
+  calibCircle.circle(0, 0, R + 6).fill({ color: GLASS, alpha: 0.04 });
+  calibCircle.circle(0, 0, R).fill({ color: 0xc8c0b8, alpha: sustaining ? 0.1 : 0.07 });
+  calibCircle.circle(0, 0, R).stroke({ color: LINE, width: 1.5, alpha: 0.4 });
   if (pct > 0) {
     const startAngle = -Math.PI / 2;
     const endAngle = startAngle + pct * Math.PI * 2;
@@ -585,6 +594,7 @@ function startCalibrating() {
   layoutCalibration();
   calibLayer.visible = true;
   gameLayer.visible = false;
+  setFrontScreen('calibrating');
   hudCard.classList.add('hidden');
   skipCalibBtn.classList.remove('hidden');
 }
@@ -599,6 +609,7 @@ function startPlaying() {
   game = 'playing';
   calibLayer.visible = false;
   gameLayer.visible = true;
+  setFrontScreen('playing');
   skipCalibBtn.classList.add('hidden');
   hudCard.classList.remove('hidden');
   applyDifficulty(difficultySelect.value);
