@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.cdnfonts.com/css/dseg7-classic" rel="stylesheet" />
+    <title>Vocal Game</title>
+  </head>
+  <body>
+    <div id="app">
+      <button id="start" class="glass-btn start-btn" type="button" aria-label="Start microphone"></button>
+
+      <div id="readout" class="hidden">
+        <div id="note">—</div>
+        <div id="freq">— Hz</div>
+        <div id="meter"><div id="meter-fill"></div></div>
+        <div id="clarity">clarity: —</div>
+      </div>
+
+      <div id="hud-card" class="hud-card hidden">
+        <div class="hud-score-group">
+          <div id="score-display" class="score-display">000000</div>
+          <div id="combo-display" class="combo-display"></div>
+        </div>
+        <select id="song-select" class="hud-select" aria-label="Song">
+          <option value="">Free play</option>
+        </select>
+        <select id="difficulty" class="hud-select" aria-label="Difficulty">
+          <option value="easy" selected>Easy</option>
+          <option value="normal">Normal</option>
+          <option value="hard">Hard</option>
+        </select>
+        <button id="pause" class="hud-pause glass-btn" type="button" aria-pressed="false" aria-label="Pause">
+          <span class="pause-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <button id="skip-calib" class="glass-btn hidden" type="button">Skip calibration</button>
+
+      <p id="status"></p>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
