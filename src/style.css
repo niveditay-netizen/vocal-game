@@ -5,9 +5,12 @@
   --glass-border: rgba(255, 255, 255, 0.55);
   --glass-shadow: 0 8px 32px rgba(31, 28, 23, 0.1);
   --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.55);
-  --text-primary: #222222;
-  --text-secondary: #717171;
-  --accent: #ff385c;
+  --text-primary: #2a2521;
+  --text-secondary: #6a6157;
+  --text-faint: #928879;
+  --accent: #e8654a;       /* warm coral — bridges Airbnb Rausch into the beige canvas */
+  --accent-deep: #c2613f;  /* clay, for depth */
+  --gold: #c99a50;         /* warm highlight */
 }
 
 * { box-sizing: border-box; }
@@ -73,85 +76,47 @@ html, body {
   flex-direction: column;
   align-items: center;
   gap: 0;
-  transform: perspective(600px) rotateX(8deg);
 }
 
 .game-title__line {
-  font-family: 'Russo One', 'Arial Black', sans-serif;
-  font-weight: 400;
-  line-height: 0.88;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  -webkit-text-stroke: 3px #120818;
-  paint-order: stroke fill;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.015em;
 }
 
-/* top word — Guitar Hero gold */
+/* top word — warm coral */
 .game-title__line--pitch {
-  font-size: clamp(2.4rem, 10vw, 4rem);
-  background: linear-gradient(180deg, #fff8c0 0%, #ffd020 28%, #ff8800 58%, #cc2800 100%);
+  font-size: clamp(2.2rem, 8.5vw, 3.4rem);
+  background: linear-gradient(165deg, #ff8a6b 0%, #e8654a 55%, #c2613f 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  filter:
-    drop-shadow(1px 1px 0 #a83800)
-    drop-shadow(2px 2px 0 #903000)
-    drop-shadow(3px 3px 0 #782800)
-    drop-shadow(4px 4px 0 #602000)
-    drop-shadow(5px 5px 0 #481818)
-    drop-shadow(0 0 18px rgba(255, 140, 0, 0.85))
-    drop-shadow(0 0 36px rgba(255, 80, 0, 0.45));
+  filter: drop-shadow(0 2px 1px rgba(120, 60, 40, 0.18));
 }
 
-/* bottom word — DDR / Beat Saber electric */
+/* bottom word — deeper clay, italic, gently larger */
 .game-title__line--smash {
-  font-size: clamp(3.6rem, 16vw, 6.8rem);
-  margin-top: -0.06em;
-  transform: rotate(-2deg) scaleX(1.06);
-  background: linear-gradient(180deg, #e8ffff 0%, #40e8ff 25%, #0090ff 55%, #0040aa 100%);
+  font-size: clamp(3.6rem, 15vw, 6.4rem);
+  font-style: italic;
+  margin-top: -0.04em;
+  transform: rotate(-2.5deg);
+  transform-origin: center;
+  background: linear-gradient(165deg, #e8654a 0%, #c2613f 50%, #a84e30 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  -webkit-text-stroke: 4px #080818;
   filter:
-    drop-shadow(1px 1px 0 #0050a0)
-    drop-shadow(2px 2px 0 #004898)
-    drop-shadow(3px 3px 0 #004090)
-    drop-shadow(4px 4px 0 #003880)
-    drop-shadow(5px 5px 0 #003070)
-    drop-shadow(6px 6px 0 #002860)
-    drop-shadow(7px 7px 0 #001848)
-    drop-shadow(0 0 22px rgba(0, 220, 255, 0.9))
-    drop-shadow(0 0 44px rgba(0, 140, 255, 0.55))
-    drop-shadow(8px 10px 18px rgba(0, 0, 0, 0.45));
-  animation: smash-pulse 2.8s ease-in-out infinite;
+    drop-shadow(0 1px 0 rgba(168, 78, 48, 0.4))
+    drop-shadow(0 10px 22px rgba(90, 45, 30, 0.16));
+  animation: smash-pulse 3.2s ease-in-out infinite;
 }
 
 @keyframes smash-pulse {
-  0%, 100% { filter:
-    drop-shadow(1px 1px 0 #0050a0)
-    drop-shadow(2px 2px 0 #004898)
-    drop-shadow(3px 3px 0 #004090)
-    drop-shadow(4px 4px 0 #003880)
-    drop-shadow(5px 5px 0 #003070)
-    drop-shadow(6px 6px 0 #002860)
-    drop-shadow(7px 7px 0 #001848)
-    drop-shadow(0 0 22px rgba(0, 220, 255, 0.9))
-    drop-shadow(0 0 44px rgba(0, 140, 255, 0.55))
-    drop-shadow(8px 10px 18px rgba(0, 0, 0, 0.45)); }
-  50% { filter:
-    drop-shadow(1px 1px 0 #0050a0)
-    drop-shadow(2px 2px 0 #004898)
-    drop-shadow(3px 3px 0 #004090)
-    drop-shadow(4px 4px 0 #003880)
-    drop-shadow(5px 5px 0 #003070)
-    drop-shadow(6px 6px 0 #002860)
-    drop-shadow(7px 7px 0 #001848)
-    drop-shadow(0 0 32px rgba(0, 240, 255, 1))
-    drop-shadow(0 0 64px rgba(0, 160, 255, 0.7))
-    drop-shadow(8px 10px 18px rgba(0, 0, 0, 0.45)); }
+  0%, 100% { transform: rotate(-2.5deg) scale(1); }
+  50% { transform: rotate(-2.5deg) scale(1.035); }
 }
 
 .start-wrap {
@@ -169,7 +134,7 @@ html, body {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 2px solid rgba(255, 56, 92, 0.45);
+  border: 2px solid rgba(232, 101, 74, 0.5);
   animation: mic-pulse-out 2.4s ease-out infinite;
   pointer-events: none;
 }
@@ -275,8 +240,8 @@ html, body {
   justify-content: center;
 }
 .hud-pause[aria-pressed="true"] {
-  background: rgba(255, 56, 92, 0.14);
-  border-color: rgba(255, 56, 92, 0.35);
+  background: rgba(232, 101, 74, 0.14);
+  border-color: rgba(232, 101, 74, 0.35);
   color: var(--accent);
 }
 

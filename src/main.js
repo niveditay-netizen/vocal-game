@@ -9,19 +9,22 @@ import { SONG_LIST, SONGS } from './songs.js';
 // noteClass 0..11 = C..B, so row = 11 - noteClass.
 const rowForNoteClass = (nc) => 11 - nc;
 
+// 12 notes as a value-matched, desaturated earthy spectrum (C..B).
+// Warm-anchored and equal in weight so no lane vibrates against the beige canvas.
 const LANE_COLORS = [
-  0xff385c, 0xff6b4a, 0xff9470, 0xc4a882, 0x8fad88, 0x6aab9a,
-  0x5898b0, 0x5b85c4, 0x7b72c4, 0xa86ea8, 0xc46888, 0x9a5568,
+  0xc75d4c, 0xd17a4a, 0xd6a24e, 0xc9b45a, 0xa7ae62, 0x82a06b,
+  0x5f9c82, 0x549aa0, 0x5a8ab0, 0x6e7cb0, 0x8e6ea6, 0xb26491,
 ];
 
-const ACCENT = 0xff385c;
-const INK = 0x222222;
-const MUTED = 0x717171;
+const ACCENT = 0xe8654a; // warm coral, matches CSS --accent
+const INK = 0x2a2521;
+const MUTED = 0x6a6157;
 const FONT = 'Inter, system-ui, sans-serif';
 const GLASS = 0xe8e2da; // warm glass tint — avoids pure-white wash
 const LINE = 0xb8aea4;
 
 const CALIB_R = 120;
+const CALIB_PROMPT = 'Sing a sustained note\nthat we will call your C';
 
 function setStartIcon(Icon = Mic) {
   startBtn.replaceChildren(createElement(Icon, { width: 26, height: 26, 'stroke-width': 1.75 }));
@@ -31,7 +34,8 @@ function layoutCalibration() {
   const { W, H } = layout;
   calibGroup.position.set(W / 2, H * 0.56);
   calibNote.position.set(0, 0);
-  calibPrompt.position.set(0, CALIB_R + 36);
+  calibPrompt.position.set(0, CALIB_R + 40);
+  calibPrompt.style.wordWrapWidth = Math.min(480, W - 48);
 }
 
 function setFrontScreen(phase) {
@@ -185,8 +189,18 @@ function buildScene() {
   });
   calibNote.anchor.set(0.5);
   calibPrompt = new Text({
-    text: 'Sing the note you\u2019d call C',
-    style: { fill: MUTED, fontSize: 18, fontWeight: '400', fontFamily: FONT, align: 'center' },
+    text: CALIB_PROMPT,
+    style: {
+      fill: MUTED,
+      fontSize: 17,
+      fontWeight: '400',
+      fontFamily: FONT,
+      align: 'center',
+      lineHeight: 24,
+      wordWrap: true,
+      breakWords: true,
+      wordWrapWidth: 480,
+    },
   });
   calibPrompt.anchor.set(0.5);
   calibGroup.addChild(calibCircle, calibNote, calibPrompt);
@@ -576,7 +590,7 @@ function updateCalibration(s, dt) {
   if (sustaining && calibrationHeld > 0) {
     calibPrompt.text = secsLeft > 0 ? `Keep holding\u2026 ${secsLeft}s` : 'Almost there…';
   } else {
-    calibPrompt.text = 'Sing the note you\u2019d call C';
+    calibPrompt.text = CALIB_PROMPT;
   }
 
   if (calibrationHeld >= CALIBRATION_HOLD_MS) {

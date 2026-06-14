@@ -1,6 +1,8 @@
 import { NOTE_NAMES } from './audio.js';
 import hotCrossBuns from '../songs/hot-cross-buns.json';
 import twinkle from '../songs/twinkle.json';
+import happyBirthday from '../songs/happy-birthday.json';
+import overTheRainbow from '../songs/over-the-rainbow.json';
 
 function noteToClass(name) {
   const i = NOTE_NAMES.indexOf(name);
@@ -19,9 +21,13 @@ export function parseSong(raw) {
 export const SONG_LIST = [
   { id: 'hot-cross-buns', title: 'Hot Cross Buns' },
   { id: 'twinkle', title: 'Twinkle Twinkle' },
+  { id: 'happy-birthday', title: 'Happy Birthday' },
+  { id: 'over-the-rainbow', title: 'Over the Rainbow' },
 ];
 
 export const SONGS = {
   'hot-cross-buns': parseSong(hotCrossBuns),
   'twinkle': parseSong(twinkle),
+  'happy-birthday': parseSong(happyBirthday),
+  'over-the-rainbow': parseSong(overTheRainbow),
 };
