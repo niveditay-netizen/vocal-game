@@ -1,5 +1,4 @@
-// Synthesized sound effects — no asset files. Each pop plays its actual note,
-// so clearing shapes sounds musical.
+// Synthesized sound effects — no asset files.
 
 let ctx;
 let master;
@@ -39,16 +38,13 @@ export function playPop(noteClass, combo = 1) {
   const t = ctx.currentTime;
   const freq = BASE_C4 * Math.pow(2, noteClass / 12);
 
-  // percussive "crack"
   noiseBurst(t, 0.06, 0.25, freq * 2, 6);
 
-  // main pluck (two slightly detuned oscillators for body)
   for (const [type, detune, gain] of [['triangle', 0, 0.3], ['sine', 0.5, 0.18]]) {
     const o = ctx.createOscillator();
     o.type = type;
     o.frequency.setValueAtTime(freq, t);
     o.detune.value = detune * 100;
-    // slight downward pitch blip for a "pop" feel
     o.frequency.exponentialRampToValueAtTime(freq * 0.98, t + 0.12);
     const g = ctx.createGain();
     g.gain.setValueAtTime(0.0001, t);
@@ -59,7 +55,6 @@ export function playPop(noteClass, combo = 1) {
     o.stop(t + 0.4);
   }
 
-  // combo shimmer: add a high octave sparkle that grows with the combo
   if (combo >= 3) {
     const o = ctx.createOscillator();
     o.type = 'sine';
@@ -91,4 +86,64 @@ export function playMiss() {
   o.start(t);
   o.stop(t + 0.35);
   noiseBurst(t, 0.18, 0.15, 200, 1);
+}
+
+// Sustained tone for the Learn phase — warm piano-ish note held ~1.2 seconds.
+export function playTone(noteClass) {
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  const freq = BASE_C4 * Math.pow(2, noteClass / 12);
+
+  for (const [f, gainPeak, dur] of [[freq, 0.28, 1.3], [freq * 2, 0.07, 1.0]]) {
+    const o = ctx.createOscillator();
+    o.type = 'sine';
+    o.frequency.value = f;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(gainPeak, t + 0.04);
+    g.gain.setValueAtTime(gainPeak, t + 0.5);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g).connect(master);
+    o.start(t);
+    o.stop(t + dur + 0.05);
+  }
+
+  noiseBurst(t, 0.04, 0.08, freq * 3, 8);
+}
+
+// Ascending chime for passing a test or clearing a level.
+export function playSuccess() {
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  [0, 4, 7, 12].forEach((semitones, i) => {
+    const freq = BASE_C4 * Math.pow(2, semitones / 12);
+    const start = t + i * 0.12;
+    const o = ctx.createOscillator();
+    o.type = 'sine';
+    o.frequency.value = freq;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, start);
+    g.gain.exponentialRampToValueAtTime(0.22, start + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, start + 0.5);
+    o.connect(g).connect(master);
+    o.start(start);
+    o.stop(start + 0.55);
+  });
+}
+
+// Gentle wrong-answer blip.
+export function playWrong() {
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  const o = ctx.createOscillator();
+  o.type = 'sine';
+  o.frequency.setValueAtTime(220, t);
+  o.frequency.exponentialRampToValueAtTime(180, t + 0.25);
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(0.2, t + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+  o.connect(g).connect(master);
+  o.start(t);
+  o.stop(t + 0.35);
 }

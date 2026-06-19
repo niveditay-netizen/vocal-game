@@ -5,53 +5,195 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600;1,9..144,700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.cdnfonts.com/css/dseg7-classic" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <title>Pitch Smash</title>
   </head>
   <body>
     <div id="app">
-      <div id="title-stage" class="title-stage">
-        <h1 id="game-title" class="game-title" aria-label="Pitch Smash">
-          <span class="game-title__line game-title__line--pitch">Pitch</span>
-          <span class="game-title__line game-title__line--smash">Smash</span>
-        </h1>
-      </div>
 
-      <div id="start-wrap" class="start-wrap">
-        <span class="mic-pulse" aria-hidden="true"></span>
-        <span class="mic-pulse mic-pulse--delay" aria-hidden="true"></span>
-        <button id="start" class="glass-btn start-btn" type="button" aria-label="Start microphone"></button>
-      </div>
-
-      <div id="readout" class="hidden">
-        <div id="note">—</div>
-        <div id="freq">— Hz</div>
-        <div id="meter"><div id="meter-fill"></div></div>
-        <div id="clarity">clarity: —</div>
-      </div>
-
-      <div id="hud-card" class="hud-card hidden">
-        <div class="hud-score-group">
-          <div id="score-display" class="score-display">000000</div>
-          <div id="combo-display" class="combo-display"></div>
+      <!-- HOME -->
+      <div id="screen-home" class="screen">
+        <div class="home-hero">
+          <div class="home-logo">
+            <span class="logo-pitch">Pitch</span><span class="logo-smash">Smash</span>
+          </div>
+          <p class="home-tagline">Train your ear. Smash notes with your voice.</p>
         </div>
-        <select id="song-select" class="hud-select" aria-label="Song">
-          <option value="">Free play</option>
-        </select>
-        <select id="difficulty" class="hud-select" aria-label="Difficulty">
-          <option value="easy" selected>Easy</option>
-          <option value="normal">Normal</option>
-          <option value="hard">Hard</option>
-        </select>
-        <button id="pause" class="hud-pause glass-btn" type="button" aria-pressed="false" aria-label="Pause">
-          <span class="pause-icon" aria-hidden="true"></span>
-        </button>
+        <div class="home-buttons">
+          <button id="btn-train" class="big-btn btn-primary">
+            <span class="btn-icon">🎓</span>
+            <span class="btn-text">
+              <span class="btn-label">Train &amp; Unlock</span>
+              <span class="btn-sub">Learn notes level by level</span>
+            </span>
+          </button>
+          <button id="btn-free" class="big-btn btn-secondary">
+            <span class="btn-icon">🎤</span>
+            <span class="btn-text">
+              <span class="btn-label">Free Play</span>
+              <span class="btn-sub">All 12 notes · sing to smash</span>
+            </span>
+          </button>
+        </div>
+        <p id="home-status" class="home-status"></p>
       </div>
 
-      <button id="skip-calib" class="glass-btn hidden" type="button">Skip calibration</button>
+      <!-- LEVEL MAP -->
+      <div id="screen-level-map" class="screen hidden">
+        <div class="nav-bar">
+          <button id="btn-back-home" class="back-btn">← Home</button>
+          <h2 class="nav-title">Choose Level</h2>
+          <div style="width:70px"></div>
+        </div>
+        <div id="level-grid" class="level-grid"></div>
+      </div>
 
-      <p id="status"></p>
+      <!-- LEARN PHASE -->
+      <div id="screen-learn" class="screen hidden">
+        <div class="nav-bar">
+          <button id="btn-back-to-levels-learn" class="back-btn">← Levels</button>
+          <span class="phase-badge badge-learn">Learn</span>
+          <div style="width:70px"></div>
+        </div>
+        <div class="learn-body">
+          <div id="learn-step-dots" class="step-dots"></div>
+          <div id="learn-note-card" class="learn-note-card">
+            <div id="learn-note-name" class="learn-note-name">C</div>
+            <div id="learn-note-desc" class="learn-note-desc">This is the note C</div>
+          </div>
+          <button id="learn-play-btn" class="play-btn">▶ Play note</button>
+          <div class="sing-area">
+            <p class="sing-prompt">Sing it back and hold!</p>
+            <div class="hold-bar-wrap">
+              <div id="learn-hold-bar" class="hold-bar"></div>
+            </div>
+            <div id="learn-pitch-label" class="pitch-label">—</div>
+          </div>
+          <div id="learn-result" class="phase-result hidden"></div>
+        </div>
+      </div>
+
+      <!-- TEST PHASE -->
+      <div id="screen-test" class="screen hidden">
+        <div class="nav-bar">
+          <button id="btn-back-to-levels-test" class="back-btn">← Levels</button>
+          <span class="phase-badge badge-test">Test</span>
+          <div style="width:70px"></div>
+        </div>
+        <div class="test-body">
+          <div class="test-progress-wrap">
+            <div id="test-progress-bar" class="test-progress-bar">
+              <div id="test-progress-fill" class="test-progress-fill"></div>
+            </div>
+            <span id="test-q-count" class="test-q-count">1 / 6</span>
+          </div>
+          <div class="mystery-card">
+            <div class="mystery-icon">?</div>
+            <div class="mystery-label">What note is this?</div>
+          </div>
+          <button id="test-play-btn" class="play-btn">▶ Play note</button>
+          <p class="test-choose-prompt">Which note did you hear?</p>
+          <div id="test-choices" class="test-choices"></div>
+          <div id="test-result" class="phase-result hidden"></div>
+        </div>
+      </div>
+
+      <!-- SMASH HUD (overlays PixiJS canvas) -->
+      <div id="smash-hud" class="hud hidden">
+        <div class="hud-left">
+          <div id="smash-timer" class="smash-timer">1:00</div>
+          <div id="smash-accuracy" class="smash-accuracy">—%</div>
+        </div>
+        <div class="hud-center">
+          <div id="smash-score" class="smash-score">000000</div>
+          <div id="smash-combo" class="smash-combo"></div>
+        </div>
+        <div class="hud-right">
+          <div class="mode-toggle">
+            <button id="btn-mode-random" class="mode-btn active">Random</button>
+            <button id="btn-mode-song" class="mode-btn">Song</button>
+          </div>
+          <button id="smash-pause-btn" class="hud-icon-btn">⏸</button>
+        </div>
+      </div>
+      <div id="smash-song-row" class="smash-song-row hidden">
+        <select id="smash-song-select" class="hud-select"></select>
+      </div>
+
+      <!-- FREE PLAY HUD -->
+      <div id="free-hud" class="hud hidden">
+        <div class="hud-left">
+          <div id="free-score" class="smash-score">000000</div>
+          <div id="free-combo" class="smash-combo"></div>
+        </div>
+        <div class="hud-center">
+          <div id="free-timer" class="free-timer hidden">1:00</div>
+        </div>
+        <div class="hud-right">
+          <select id="free-song-select" class="hud-select">
+            <option value="">Free play</option>
+          </select>
+          <select id="free-difficulty" class="hud-select">
+            <option value="easy" selected>Easy</option>
+            <option value="normal">Normal</option>
+            <option value="hard">Hard</option>
+          </select>
+          <button id="free-pause-btn" class="hud-icon-btn" aria-pressed="false">⏸</button>
+          <button id="btn-back-from-free" class="hud-icon-btn back-home-btn">← Home</button>
+        </div>
+      </div>
+
+      <!-- Skip calibration (free play) -->
+      <button id="skip-calib" class="skip-calib-btn hidden">Skip calibration</button>
+
+      <!-- ROUND COMPLETE -->
+      <div id="screen-round-complete" class="screen hidden">
+        <div class="result-card">
+          <div id="result-title" class="result-title">Round Complete!</div>
+          <div id="result-badge" class="result-badge"></div>
+          <div class="result-stats">
+            <div class="stat-row">
+              <span class="stat-label">Accuracy</span>
+              <span id="result-accuracy" class="stat-value">—</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Hits / Total</span>
+              <span id="result-hits" class="stat-value">—</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Best Combo</span>
+              <span id="result-best-combo" class="stat-value">—</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Score</span>
+              <span id="result-score" class="stat-value">—</span>
+            </div>
+          </div>
+          <div class="result-actions">
+            <button id="btn-next-level" class="action-btn btn-primary hidden">Next Level →</button>
+            <button id="btn-retry-smash" class="action-btn btn-outline">Try Again</button>
+            <button id="btn-to-level-map" class="action-btn btn-outline">Level Map</button>
+            <button id="btn-free-again" class="action-btn btn-primary hidden">Play Again</button>
+            <button id="btn-free-change-song" class="action-btn btn-outline hidden">Try Another Song</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Countdown overlay (free play start) -->
+      <div id="countdown-overlay" class="countdown-overlay hidden">
+        <div id="countdown-number" class="countdown-number"></div>
+      </div>
+
+      <!-- Song end toast -->
+      <div id="song-end-toast" class="song-end-toast hidden">Song ended — random orbs now!</div>
+
+      <!-- Combo milestone + check-in toast -->
+      <div id="milestone-toast" class="milestone-toast hidden"></div>
+
+      <!-- Lyric banner (synced to song orbs) -->
+      <div id="lyric-banner" class="lyric-banner hidden"></div>
+
+      <!-- PixiJS canvas injected here by JS -->
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>

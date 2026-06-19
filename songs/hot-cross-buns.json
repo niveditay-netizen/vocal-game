@@ -2,17 +2,17 @@
   "title": "Hot Cross Buns",
   "bpm": 96,
   "notes": [
-    { "t": 1200, "note": "E" },
-    { "t": 1825, "note": "D" },
-    { "t": 2450, "note": "C" },
-    { "t": 3700, "note": "E" },
-    { "t": 4325, "note": "D" },
-    { "t": 4950, "note": "C" },
-    { "t": 6200, "note": "C" },
-    { "t": 6825, "note": "G" },
-    { "t": 7450, "note": "G" },
-    { "t": 8700, "note": "E" },
-    { "t": 9325, "note": "D" },
-    { "t": 9950, "note": "C" }
+    { "t": 1200, "note": "E", "lyric": "Hot" },
+    { "t": 1825, "note": "D", "lyric": "cross" },
+    { "t": 2450, "note": "C", "lyric": "buns!" },
+    { "t": 3700, "note": "E", "lyric": "Hot" },
+    { "t": 4325, "note": "D", "lyric": "cross" },
+    { "t": 4950, "note": "C", "lyric": "buns!" },
+    { "t": 6200, "note": "C", "lyric": "One a" },
+    { "t": 6825, "note": "G", "lyric": "pen-" },
+    { "t": 7450, "note": "G", "lyric": "ny" },
+    { "t": 8700, "note": "E", "lyric": "hot" },
+    { "t": 9325, "note": "D", "lyric": "cross" },
+    { "t": 9950, "note": "C", "lyric": "buns!" }
   ]
 }

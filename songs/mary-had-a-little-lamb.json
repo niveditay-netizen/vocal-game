@@ -1,0 +1,32 @@
+{
+  "title": "Mary Had a Little Lamb",
+  "bpm": 100,
+  "notes": [
+    { "t": 1200, "note": "E", "lyric": "Ma-" },
+    { "t": 1800, "note": "D", "lyric": "ry" },
+    { "t": 2400, "note": "C", "lyric": "had" },
+    { "t": 3000, "note": "D", "lyric": "a" },
+    { "t": 3600, "note": "E", "lyric": "lit-" },
+    { "t": 4200, "note": "E", "lyric": "tle" },
+    { "t": 4800, "note": "E", "lyric": "lamb" },
+    { "t": 6000, "note": "D", "lyric": "lit-" },
+    { "t": 6600, "note": "D", "lyric": "tle" },
+    { "t": 7200, "note": "D", "lyric": "lamb" },
+    { "t": 8400, "note": "E", "lyric": "lit-" },
+    { "t": 9000, "note": "G", "lyric": "tle" },
+    { "t": 9600, "note": "G", "lyric": "lamb" },
+    { "t": 10800, "note": "E", "lyric": "Ma-" },
+    { "t": 11400, "note": "D", "lyric": "ry" },
+    { "t": 12000, "note": "C", "lyric": "had" },
+    { "t": 12600, "note": "D", "lyric": "a" },
+    { "t": 13200, "note": "E", "lyric": "lit-" },
+    { "t": 13800, "note": "E", "lyric": "tle" },
+    { "t": 14400, "note": "E", "lyric": "lamb" },
+    { "t": 15000, "note": "E", "lyric": "its" },
+    { "t": 16200, "note": "D", "lyric": "fleece" },
+    { "t": 16800, "note": "D", "lyric": "was" },
+    { "t": 17400, "note": "E", "lyric": "white" },
+    { "t": 18000, "note": "D", "lyric": "as" },
+    { "t": 19200, "note": "C", "lyric": "snow" }
+  ]
+}

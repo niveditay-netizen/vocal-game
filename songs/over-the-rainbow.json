@@ -2,19 +2,19 @@
   "title": "Over the Rainbow",
   "bpm": 76,
   "notes": [
-    { "t": 1200, "note": "C" },
-    { "t": 2000, "note": "E" },
-    { "t": 2800, "note": "G" },
-    { "t": 3600, "note": "G" },
-    { "t": 4400, "note": "A" },
-    { "t": 5200, "note": "G" },
-    { "t": 6000, "note": "F" },
-    { "t": 6800, "note": "E" },
-    { "t": 7600, "note": "D" },
-    { "t": 8400, "note": "D" },
-    { "t": 9200, "note": "E" },
-    { "t": 10000, "note": "C" },
-    { "t": 10800, "note": "E" },
-    { "t": 11600, "note": "G" }
+    { "t": 1200,  "note": "C", "lyric": "Some-" },
+    { "t": 2000,  "note": "E", "lyric": "where" },
+    { "t": 2800,  "note": "G", "lyric": "o-" },
+    { "t": 3600,  "note": "G", "lyric": "ver" },
+    { "t": 4400,  "note": "A", "lyric": "the" },
+    { "t": 5200,  "note": "G", "lyric": "rain-" },
+    { "t": 6000,  "note": "F", "lyric": "bow" },
+    { "t": 6800,  "note": "E", "lyric": "way" },
+    { "t": 7600,  "note": "D", "lyric": "up" },
+    { "t": 8400,  "note": "D", "lyric": "high" },
+    { "t": 9200,  "note": "E", "lyric": "there's" },
+    { "t": 10000, "note": "C", "lyric": "a" },
+    { "t": 10800, "note": "E", "lyric": "land" },
+    { "t": 11600, "note": "G", "lyric": "that" }
   ]
 }
