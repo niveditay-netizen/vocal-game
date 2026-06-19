@@ -1,108 +1,125 @@
-# 🎤 Pitch Smash
+# Pitch Smash
 
-**Your voice is the controller.** Shapes glide in from the right on twelve note-lanes — sing the right note and they shatter. Miss one and it slips past. No keyboard, no mouse, no buttons. Just you and the scale.
+**An ear training game where your voice is the controller.**
 
-Built with [PixiJS](https://pixijs.com/) (WebGL) and real-time pitch detection in the browser. Nothing leaves your machine — the mic stream is analyzed locally and never uploaded.
+Sing notes to smash orbs. Learn to recognize notes by ear. Progress through 6 levels from a single note all the way to the full chromatic scale.
 
----
+**Live at [pitch-smash.vercel.app](https://pitch-smash.vercel.app)**
 
-## How it plays
-
-1. **Tap the mic button** and grant microphone access.
-2. **Calibrate** — sing and hold *any* comfortable note and call it your "C". The game tunes itself to *your* voice, so it works whatever your range.
-3. **Sing to smash.** Glossy orbs drift in across 12 lanes (one per chromatic note). Hit a lane's note while its orb is in the strike zone and it bursts — with a sound *pitched to that very note*, so clearing shapes literally plays music.
-4. **Stack combos.** Consecutive hits multiply your score and layer in a shimmer; let an orb escape and your combo resets with a thud.
-
-### Modes
-- **Free play** — endless, randomized spawns.
-- **Songs** — *Hot Cross Buns* and *Twinkle Twinkle* are charted out; sing the melody to clear them.
-- **Difficulty** — Easy / Normal / Hard tune spawn rate and speed.
-- **Pause** anytime with the pause button or the **Spacebar**.
+Built with [PixiJS 8](https://pixijs.com/) (WebGL) and real-time pitch detection in the browser. The mic stream is analyzed locally — nothing leaves your machine.
 
 ---
 
-## Why it feels good
+## How it works
 
-- **Octave-agnostic.** Singing a C in *any* octave hits the C lane — every voice can play.
-- **Forgiving by design.** A wide strike zone plus pitch-stability smoothing absorbs mic latency and tuning wobble, so it rewards hitting the *note*, not frame-perfect timing.
-- **No spam-cheese.** Each lane has a brief cooldown after a pop, so you can't just glissando up the scale to clear the board.
-- **Juice.** Screen shake, shockwave rings, lane flashes, glass-shard particles, and per-note synthesized audio — all generated at runtime, zero asset files.
+### Train & Unlock
+Work through 6 levels in order. Each level has two phases:
+
+**Learn** — The note plays through the speaker. Sing it back and hold it to confirm you've got it. Multi-note levels walk you through each note in the set.
+
+**Test** — The note plays and you pick the name from colored buttons. This is actual ear training — you identify the note by sound, not by singing it back.
+
+Complete all 6 levels to unlock the Smash game.
+
+| Level | Name | Notes |
+|---|---|---|
+| 1 | One Note | C |
+| 2 | Perfect Fifth | C G |
+| 3 | Major Triad | C E G |
+| 4 | Pentatonic | C D E G A |
+| 5 | Full Scale | C D E F G A B |
+| 6 | Chromatic | All 12 notes |
+
+### Smash
+A 60-second game using all notes from your unlocked levels. Orbs drift in from the right — sing the matching note while the orb is in the strike zone to smash it. Stack combos. Hit 80% accuracy to clear the round.
+
+### Free Play
+No unlocking required. Two modes:
+
+- **Random** — 1-minute round with randomized orbs across all 12 lanes. Shows score, accuracy and grade at the end.
+- **Song** — Pick from 10 charted songs. Orbs follow the melody with synced lyrics. Play the whole song, then see your results.
+
+Free play features:
+- 30-second check-ins with accuracy and encouragement
+- Combo milestone toasts at 10×, 25×, 50×, 100×
+- Song progress timer (elapsed / total)
+- 3-2-1-GO! countdown on start and song change
+- Grade (S / A / B / C / D) on the results screen
+
+---
+
+## Songs
+
+10 songs included, all with synced lyrics:
+
+- Hot Cross Buns
+- Twinkle Twinkle Little Star
+- Happy Birthday
+- Mary Had a Little Lamb
+- Amazing Grace
+- Jingle Bells
+- Ode to Joy
+- Do Re Mi
+- We Wish You a Merry Christmas
+- Over the Rainbow
 
 ---
 
 ## Tech
 
-| Concern | Choice |
+| | |
 |---|---|
 | Rendering | PixiJS 8 (WebGL) |
-| Pitch detection | [`pitchy`](https://github.com/ianprime0509/pitchy) (McLeod pitch method) over Web Audio `AnalyserNode` |
-| Sound | Web Audio API — oscillators + noise, synthesized live |
-| Icons | `lucide` |
+| Pitch detection | [`pitchy`](https://github.com/ianprime0509/pitchy) — McLeod pitch method over Web Audio `AnalyserNode` |
+| Sound | Web Audio API — oscillators + noise, synthesized live, no audio files |
 | Build | Vite |
 
 ### Project structure
 ```
 src/
-  main.js     game loop, scene graph, input, UI wiring
-  audio.js    mic capture + pitch tracking (absolute & calibration-relative)
-  sfx.js      synthesized pop / miss / combo sounds
-  songs.js    song loader + note→lane parsing
-songs/        song charts (JSON)
+  main.js      game loop, scene graph, all UI and game logic
+  audio.js     mic capture + pitch tracking
+  sfx.js       synthesized sound effects (pop, miss, tone, success, wrong)
+  songs.js     song loader and note → lane parsing
+  levels.js    level definitions (notes, colors, names)
+  progress.js  localStorage-backed unlock state
+songs/         song charts (JSON with timing + lyrics)
 ```
 
 ---
 
-## Run it locally
+## Run locally
 
-Requires **Node 18+**.
+Requires Node 18+.
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173
+npm run dev      # http://localhost:5174
 ```
 
-Build for production:
-
 ```bash
-npm run build    # outputs to dist/
+npm run build    # production build → dist/
 npm run preview  # serve the build locally
 ```
 
-> **Heads up:** microphone access requires a secure context — `localhost` works out of the box; any other host needs HTTPS.
+Microphone access requires a secure context — `localhost` works; any other host needs HTTPS.
 
 ---
 
-## Add your own song
+## Add a song
 
-Drop a JSON file in `songs/`:
+Drop a JSON file in `songs/` and register it in `src/songs.js`:
 
 ```json
 {
-  "title": "My Tune",
+  "title": "My Song",
   "bpm": 120,
   "notes": [
-    { "t": 0,    "note": "C" },
-    { "t": 500,  "note": "D" },
-    { "t": 1000, "note": "E" }
+    { "t": 0,    "note": "C", "lyric": "do" },
+    { "t": 500,  "note": "D", "lyric": "re" },
+    { "t": 1000, "note": "E", "lyric": "mi" }
   ]
 }
 ```
 
-`t` is the time in milliseconds when the orb should reach the strike zone; `note` is its pitch class (`C`, `C#`, … `B`). Register it in `src/songs.js` and it appears in the song picker.
-
----
-
-## Tuning
-
-The feel-knobs live at the top of `src/main.js`:
-
-```js
-const ZONE_FRAC = 0.6;          // how much of the lane is "strikeable"
-const LANE_COOLDOWN_MS = 300;   // anti-spam cooldown after a pop
-const DIFFICULTY = { ... };     // spawn interval + shape speed per level
-const CALIBRATION_HOLD_MS = 5000;
-```
-
----
-
-Made for fun. Bring your voice. 🎶
+`t` is milliseconds when the orb reaches the strike zone. `lyric` is optional — shown as a banner at the bottom while the orb approaches.
